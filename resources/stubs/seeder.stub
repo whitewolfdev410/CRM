@@ -1,0 +1,44 @@
+<?php
+
+namespace {{namespace}}{{module}}\Database\Seeds;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use App\Core\Rbac\Permission;
+
+class {{name}}DatabaseSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Model::unguard();
+
+        $list = $this->getPermissions();
+
+        $result = Permission::set('{{smallname}}', $list);
+
+        foreach ($result as $info) {
+            $this->command->info($info);
+        }
+    }
+
+    /**
+     * Get permissions list
+     */
+    public function getPermissions()
+    {
+        return [
+            /*
+            '{{smallname}}.index'   => '{{name}} index',
+            '{{smallname}}.show'    => '{{name}} show',
+            '{{smallname}}.store'   => '{{name}} store',
+            '{{smallname}}.update'  => '{{name}} update',
+            '{{smallname}}.destroy' => '{{name}} destroy',
+            */
+        ];
+    }
+}

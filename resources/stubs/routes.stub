@@ -1,0 +1,5 @@
+<?php
+
+$NS = MODULES_NS.'{{module}}\Http\Controllers\\';
+
+$router->resource('{{plural}}', $NS.'{{module}}Controller');

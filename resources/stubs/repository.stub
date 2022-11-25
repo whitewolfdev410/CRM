@@ -1,0 +1,42 @@
+<?php
+
+namespace {{namespace}}{{module}}\Repositories;
+
+use App\Core\AbstractRepository;
+use App\Modules\{{module}}\Models\{{name}};
+use Illuminate\Container\Container;
+use App\Modules\{{module}}\Http\Requests\{{name}}Request;
+
+/**
+ * {{name}} repository class
+ */
+class {{name}}Repository extends AbstractRepository
+{
+    /**
+     * {@inheritdoc}
+     */
+    protected $searchable = [];
+
+    /**
+     * Repository constructor
+     *
+     * @param Container $app
+     * @param {{name}} ${{smallnameCamel}}
+     */
+    public function __construct(Container $app, {{name}} ${{smallnameCamel}})
+    {
+        parent::__construct($app,  ${{smallnameCamel}});
+    }
+
+    /**
+     * Get front-end validation rules
+     *
+     * @return array
+     */
+    public function getRequestRules()
+    {
+        $req = new {{name}}Request();
+
+        return $req->getFrontendRules();
+    }
+}

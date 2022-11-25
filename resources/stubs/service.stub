@@ -1,0 +1,31 @@
+<?php
+
+namespace {{namespace}}{{module}}\Services;
+
+use App\Modules\{{module}}\Repositories\{{name}}Repository;
+use Illuminate\Container\Container;
+
+class {{name}}Service
+{
+    /**
+     * @var Container
+     */
+    protected $app;
+
+    /**
+     * @var {{name}}Repository
+     */
+    protected ${{smallnameCamel}};
+
+    /**
+     * Initialize class parameters
+     *
+     * @param Container $app
+     * @param {{name}}Repository ${{smallnameCamel}}
+     */
+    public function __construct(Container $app, {{name}}Repository ${{smallnameCamel}})
+    {
+        $this->app = $app;
+        $this->{{smallnameCamel}} = ${{smallnameCamel}};
+    }
+}

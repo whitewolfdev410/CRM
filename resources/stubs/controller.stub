@@ -1,0 +1,147 @@
+<?php
+
+namespace {{namespace}}{{module}}\Http\Controllers;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Modules\{{module}}\Repositories\{{name}}Repository;
+use Illuminate\Config\Repository as Config;
+use App\Modules\{{module}}\Http\Requests\{{name}}Request;
+use Illuminate\Http\Response;
+use App;
+
+/**
+ * Class {{name}}Controller
+ *
+ * @package App\Modules\{{name}}\Http\Controllers
+ */
+class {{name}}Controller extends Controller
+{
+    /**
+     * {{name}} repository
+     *
+     * @var {{name}}Repository
+     */
+    private ${{smallnameCamel}}Repository;
+
+    /**
+     * Set repository and apply auth filter
+     *
+     * @param {{name}}Repository ${{smallnameCamel}}Repository
+     */
+    public function __construct({{name}}Repository ${{smallnameCamel}}Repository)
+    {
+        $this->middleware('auth');
+        $this->{{smallnameCamel}}Repository = ${{smallnameCamel}}Repository;
+    }
+
+    /**
+     * Return list of {{name}}
+     *
+     * @param Config $config
+     *
+     * @return Response
+     */
+    public function index(Config $config)
+    {
+        $this->checkPermissions(['{{smallname}}.index']);
+        $onPage = $config->get('system_settings.{{smallname}}_pagination');
+        $list = $this->{{smallnameCamel}}Repository->paginate($onPage);
+
+        return response()->json($list);
+    }
+
+    /**
+     * Display the specified {{name}}
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function show($id)
+    {
+        $this->checkPermissions(['{{smallname}}.show']);
+        $id = (int) $id;
+
+        return response()->json($this->{{smallnameCamel}}Repository->show($id));
+    }
+
+    /**
+     * Return module configuration for store action
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $this->checkPermissions(['{{smallname}}.store']);
+        $rules['fields'] = $this->{{smallnameCamel}}Repository->getRequestRules();
+
+        return response()->json($rules);
+    }
+
+    /**
+     * Store a newly created {{name}} in storage.
+     *
+     * @param {{name}}Request $request
+     *
+     * @return Response
+     */
+    public function store({{name}}Request $request)
+    {
+        $this->checkPermissions(['{{smallname}}.store']);
+        $model = $this->{{smallnameCamel}}Repository->create($request->all());
+
+        return response()->json(['item' => $model], 201);
+    }
+
+    /**
+     * Display {{name}} and module configuration for update action
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $this->checkPermissions(['{{smallname}}.update']);
+        $id = (int) $id;
+
+        return response()->json($this->{{smallnameCamel}}Repository->show($id, true));
+    }
+
+    /**
+     * Update the specified {{name}} in storage.
+     *
+     * @param {{name}}Request $request
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function update({{name}}Request $request, $id)
+    {
+        $this->checkPermissions(['{{smallname}}.update']);
+        $id = (int) $id;
+
+        $record = $this->{{smallnameCamel}}Repository->updateWithIdAndInput($id,
+            $request->all());
+
+        return response()->json(['item' => $record]);
+    }
+
+    /**
+     * Remove the specified {{name}} from storage.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $this->checkPermissions(['{{smallname}}.destroy']);
+        App::abort(404);
+        exit;
+
+        /* $id = (int) $id;
+        $this->{{smallnameCamel}}Repository->destroy($id); */
+    }
+}

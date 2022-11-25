@@ -1,0 +1,22 @@
+<?php
+
+namespace {{namespace}}{{module}}\Models;
+
+use App\Core\LogModel;
+
+class {{name}} extends LogModel
+{
+    protected $table = '{{smallnameSnake}}';
+    protected $primaryKey  = 'id';
+
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'modified_at';
+
+    protected $fillable = [];
+
+    // relationships
+
+    // scopes
+
+    // getters
+}
